@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:ecommerce_store/screens/hot.dart';
 import 'package:ecommerce_store/widgets/product_model.dart';
 import 'package:ecommerce_store/cubit/state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;

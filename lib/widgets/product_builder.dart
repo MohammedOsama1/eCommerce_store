@@ -24,7 +24,7 @@ class ProductBuilder extends StatelessWidget {
               children: [
                 Image.network(
                   model.image,
-                  height: 110,
+                  height: 100,
                   fit: BoxFit.fill,
                 ),
                 const SizedBox(
