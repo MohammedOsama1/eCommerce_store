@@ -14,7 +14,6 @@ class HotScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         HomeCubit cubit = HomeCubit.get(context);
-        cubit.getAllProducts();
         List productList = cubit.productList;
         return  Padding(
             padding: const EdgeInsets.all(8.0),

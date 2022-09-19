@@ -10,18 +10,28 @@ class SelectedCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String categoryName = ModalRoute.of(context)!.settings.arguments as String;
+
+    String categoryName = ModalRoute.of(context)!.settings.arguments as String ;
+
     return BlocConsumer<HomeCubit, HomeStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+
+        },
         builder: (context, state) {
+
           HomeCubit cubit = HomeCubit.get(context);
+
           cubit.getCategory(categoryName);
-          List data = cubit.categoryList;
+          List data = cubit.productCategoryList;
+          print(data.length);
+
           return Scaffold(
             appBar: AppBar(
               leading: InkWell(
                 onTap: () {
-                  cubit.categoryList.clear();
+                  cubit.clearData();
+                  data.clear();
+
                   Navigator.pop(context);
                 },
                 child: const Icon(Icons.arrow_back),

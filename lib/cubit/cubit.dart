@@ -15,7 +15,6 @@ class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
-  List<ProductModel> productList = [];
 
   int currentIndex = 0;
   List<Widget> screens = const [
@@ -41,57 +40,49 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeNavBarSucState());
   }
 
+  ////////////////////////////////////////////////////
+
+  List<ProductModel> productList = [];
+
   Future getAllProducts() async {
     String url = 'https://fakestoreapi.com/products';
 
-    if (productList.isEmpty) {
-      await http.get(Uri.parse(url)).then((value) {
-        List data = jsonDecode(value.body);
-
-        for (int i = 0; i < data.length; i++) {
-          if (productList.length == 20) {
-            break;
-          } else {
-            productList.add(ProductModel.fromJson(data[i]));
-          }
-        }
-        emit(GetProductSucState());
-        print(productList.length);
-      });
-    }
-  }
-
-  Future getAllCategories() async {
-    emit(GetCategoriesLoadingState());
-
-    String url = 'https://fakestoreapi.com/products/categories';
     await http.get(Uri.parse(url)).then((value) {
-      emit(GetCategoriesSucState());
-      List categoriesList = jsonDecode(value.body);
-      return categoriesList;
-    }).catchError((onError) {
-      emit(GetCategoriesErrorState());
+      List body = jsonDecode(value.body);
+//---------------------------------------------------------
+      for (int i = 0; i < body.length; i++) {
+        productList.add(ProductModel.fromJson(body[i]));
+      }
+
+      emit(GetProductSucState());
     });
   }
 
-  List<ProductModel> categoryList = [];
+  List<ProductModel> productCategoryList = [];
 
   Future getCategory(String categoryName) async {
     emit(GetCategoryLoadingState());
+
     String url = 'https://fakestoreapi.com/products/category/$categoryName';
+
     await http.get(Uri.parse(url)).then((value) {
-      List data = jsonDecode(value.body);
-      for (int i = 0; i < data.length; i++) {
-        categoryList.add(ProductModel.fromJson(data[i]));
+      List body = jsonDecode(value.body);
+      if (productCategoryList.isEmpty) {
+        for (int i = 0; i < 6; i++) {
+          productCategoryList.add(ProductModel.fromJson(body[i]));
+        }
       }
-    }).then((value) {
+
       emit(GetCategorySucState());
-      return categoryList;
     }).catchError((onError) {
       emit(GetCategoryErrorState());
     });
   }
 
+  void clearData ( ){
+    productCategoryList.clear();
+
+  }
   Future addProduct(ProductModel model) async {
     emit(AddProductLoadingState());
     String url = 'https://fakestoreapi.com/products';
