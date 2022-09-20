@@ -17,10 +17,10 @@ class HomeCubit extends Cubit<HomeStates> {
   static HomeCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
-  List<Widget> screens = const [
-    HotScreen(),
-    CategoryScreen(),
-    FavoritesScreen(),
+  List<Widget> screens = [
+    const HotScreen(),
+    const CategoryScreen(),
+    const FavoritesScreen(),
     AddProductScreen(),
   ];
   List<BottomNavigationBarItem> bottom = const [
@@ -83,18 +83,17 @@ class HomeCubit extends Cubit<HomeStates> {
     productCategoryList.clear();
   }
 
-  Future addProduct(ProductModel model) async {
+  Future addProduct(title, price, description, image, category) async {
     emit(AddProductLoadingState());
     String url = 'https://fakestoreapi.com/products';
     await http.post(Uri.parse(url), body: {
-      "title": model.title,
-      "price": model.price,
-      "description": model.description,
-      "image": model.image,
-      "category": model.category
+      "title": title,
+      "price": price,
+      "description": description,
+      "image": image,
+      "category": category
     }).then((value) {
       emit(AddProductSucState());
-      print(value.body);
     }).catchError((onError) {
       emit(AddProductErrorState());
     });
