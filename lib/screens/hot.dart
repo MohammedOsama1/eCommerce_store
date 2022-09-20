@@ -26,7 +26,7 @@ class HotScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, '2',
                       arguments: productList[index]);
-                },
+                },color: cubit.favList.contains(productList[index]) ? Colors.red:Colors.black,
               ),
             ),
         );

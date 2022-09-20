@@ -79,10 +79,10 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void clearData ( ){
+  void clearData() {
     productCategoryList.clear();
-
   }
+
   Future addProduct(ProductModel model) async {
     emit(AddProductLoadingState());
     String url = 'https://fakestoreapi.com/products';
@@ -114,5 +114,14 @@ class HomeCubit extends Cubit<HomeStates> {
     }).catchError((onError) {
       emit(UpDateProductErrorState());
     });
+  }
+
+  List<ProductModel> favList = [];
+
+  void addTOFav(ProductModel) {
+    favList.contains(ProductModel)
+        ? favList.removeWhere((item) => item == ProductModel)
+        : favList.add(ProductModel);
+    emit(ChangeFavSucState());
   }
 }

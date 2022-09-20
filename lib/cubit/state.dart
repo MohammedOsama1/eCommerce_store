@@ -23,5 +23,7 @@ class UpDateProductSucState extends HomeStates {}
 class UpDateProductErrorState extends HomeStates {}
 
 class ChangeNavBarSucState extends HomeStates {}
+class ChangeFavSucState extends HomeStates {}
+
 
 
